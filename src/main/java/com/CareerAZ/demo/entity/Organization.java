@@ -4,6 +4,9 @@ package com.CareerAZ.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -23,8 +26,8 @@ import java.util.UUID;
 public class Organization {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -46,7 +49,7 @@ public class Organization {
     private Plan plan = Plan.FREE;
 
     // Additional metadata (address, legal info) stored as JSON
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "json")
     private String metadataJson;
 
     @Column(nullable = false)

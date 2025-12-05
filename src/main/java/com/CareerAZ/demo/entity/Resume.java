@@ -4,6 +4,9 @@ package com.CareerAZ.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -18,8 +21,8 @@ import java.util.UUID;
 public class Resume {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -30,8 +33,9 @@ public class Resume {
 
     private Integer version = 1;
 
-    // structured resume JSON (sections). Use jsonb in Postgres.
-    @Column(columnDefinition = "jsonb")
+    // structured resume JSON (sections). Use json in Postgres.
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "response_json", columnDefinition = "JSON")
     private String dataJson;
 
     @ManyToOne(fetch = FetchType.LAZY)

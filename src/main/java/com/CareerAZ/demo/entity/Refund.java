@@ -4,6 +4,9 @@ package com.CareerAZ.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
@@ -21,8 +24,8 @@ import java.util.UUID;
 public class Refund {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     // Link to the original payment transaction (nullable if external)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,7 +54,7 @@ public class Refund {
     private RefundStatus status = RefundStatus.REQUESTED;
 
     // Raw payload from gateway webhook (optional)
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "json")
     private String rawPayload;
 
     private Instant requestedAt;

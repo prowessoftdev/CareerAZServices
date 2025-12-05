@@ -5,6 +5,9 @@ package com.CareerAZ.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -24,8 +27,8 @@ import java.util.UUID;
 public class PaymentTransaction {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -56,7 +59,8 @@ public class PaymentTransaction {
     private Instant refundedAt;
 
     // Raw webhook/response payload for auditing (truncate if huge)
-    @Column(columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "response_json", columnDefinition = "JSON")
     private String rawStripePayload;
 
     // Refunds associated (bi-directional optional)

@@ -4,6 +4,9 @@ package com.CareerAZ.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -17,8 +20,8 @@ import java.util.UUID;
 public class JobPosting {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     // optional: who saved/analyzed it
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,7 +35,7 @@ public class JobPosting {
     private String rawText;
 
     // parsed JSON: keywords, skills, yearsExp, education, etc.
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "json")
     private String parsedJson;
 
     // hash for dedupe of job description text

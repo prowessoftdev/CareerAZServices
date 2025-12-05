@@ -4,6 +4,9 @@ package com.CareerAZ.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
@@ -24,8 +27,8 @@ import java.util.UUID;
 public class Coupon {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false, length = 64, unique = true)
     private String code; // e.g., "WELCOME25"
@@ -49,7 +52,7 @@ public class Coupon {
     private BigDecimal maxDiscountAmount;
 
     // Plan constraints: JSON array of plan keys or null for all plans.
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "json")
     private String appliesToPlansJson;
 
     private Integer maxRedemptions;      // null = unlimited

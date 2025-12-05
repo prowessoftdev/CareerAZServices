@@ -4,6 +4,9 @@ package com.CareerAZ.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -23,8 +26,8 @@ import java.util.UUID;
 public class ATSReport {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id", nullable = false)
@@ -38,14 +41,14 @@ public class ATSReport {
     private Integer score;
 
     // component scores: keywordMatch, skillsMatch, formatting, experience...
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "json")
     private String componentScoresJson;
 
     // gaps: missing keywords, missing skills, suggestions
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "json")
     private String gapsJson;
 
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "json")
     private String suggestionsJson;
 
     private Instant createdAt;

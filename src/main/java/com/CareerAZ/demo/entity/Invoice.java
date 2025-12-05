@@ -4,6 +4,9 @@ package com.CareerAZ.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
@@ -18,8 +21,8 @@ import java.util.UUID;
 public class Invoice {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -39,7 +42,7 @@ public class Invoice {
     private Instant paidAt;
     private Instant createdAt;
 
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "json")
     private String rawStripePayload; // store webhook payload for auditing (optional)
 
     @PrePersist
