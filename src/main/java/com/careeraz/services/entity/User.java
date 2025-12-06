@@ -1,4 +1,4 @@
-package com.careeraz.services.services.entity;
+package com.careeraz.services.entity;
 
 
 import jakarta.persistence.*;
