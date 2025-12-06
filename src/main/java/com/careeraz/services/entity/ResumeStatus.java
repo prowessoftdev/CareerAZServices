@@ -1,4 +1,4 @@
-package com.CareerAZ.entity;
+package com.CareerAZ.demo.entity;
 
 
 
